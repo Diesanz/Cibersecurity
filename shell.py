@@ -7,7 +7,7 @@ init(autoreset=True)  # Inicializa colorama para reiniciar colores automáticame
 
 # Menú de opciones
 programs = {
-    1: "python3 /home/diego/Escritorio/Programas/nmap.py",
+    1: "python3 /home/diego/Escritorio/Programas/nmap2.py",
     2: "python3 /home/diego/Escritorio/Programas/hydra.py"
 }
 
