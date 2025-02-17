@@ -7,8 +7,8 @@ init(autoreset=True)  # Inicializa colorama para reiniciar colores automáticame
 
 # Menú de opciones
 programs = {
-    1: "python3 /home/diego/Escritorio/Programas/EscaneoAutomatico/nmap/nmap2.py",
-    2: "python3 /home/diego/Escritorio/Programas/EscaneoAutomatico/hydra/hydra.py"
+    1: "python3 /EscaneoAutomatico/nmap/nmap2.py",
+    2: "python3 /EscaneoAutomatico/hydra/hydra.py"
 }
 
 def show_banner():
