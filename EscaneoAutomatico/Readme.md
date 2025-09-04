@@ -1,57 +1,87 @@
-# fsociety - Menú de Escaneo Automático
+# fsociety – Menú de Escaneo Automático (EscaneoAutomatico)
 
-Este proyecto es un menú interactivo en Python que permite ejecutar herramientas de escaneo de seguridad de forma automatizada. Utiliza `nmap` y `hydra` como herramientas principales para la auditoría de redes y pruebas de fuerza bruta.
+Menú interactivo en Python que orquesta escaneos de seguridad con Nmap y ataques de fuerza bruta con Hydra, a través de dos utilidades incluidas en este proyecto:
+- nmap/nmap2.py: automatiza múltiples perfiles de escaneo con Nmap.
+- hydra/hydra.py: facilita ataques de autenticación con Hydra en distintos servicios.
+
+El lanzador principal es shell.py, que muestra un menú “fsociety” para ejecutar cada herramienta.
 
 ## Características
+- Interfaz interactiva con menú de opciones.
+- Permite modificar el comando antes de ejecutarlo (pre-relleno en la línea de comandos).
+- Colores en consola mediante colorama y banner con pyfiglet.
+- Manejo de errores y control de interrupciones (Ctrl+C).
 
-- **Interfaz interactiva** con opciones de selección de comandos.
-- **Ejecución automática** de scripts de `nmap` y `hydra`.
-- **Historial de comandos** con soporte para Linux/Mac.
-- **Formato visual mejorado** gracias a `pyfiglet` y `colorama`.
-- **Manejo de errores** y salida en colores para facilitar la lectura.
-
-## Instalación y Requisitos
-
-Antes de ejecutar el script, asegúrate de tener instaladas las siguientes dependencias:
-
-```bash
-pip install pyfiglet colorama
+## Estructura
+```
+EscaneoAutomatico/
+├─ shell.py                 # Lanzador fsociety (menú)
+├─ nmap/
+│  ├─ nmap2.py             # Automatización de Nmap
+│  └─ ayuda_nmap.py        # Ayuda de comandos Nmap
+└─ hydra/
+   ├─ hydra.py             # Automatización de Hydra
+   └─ ayuda_hydra.py       # Ayuda de comandos Hydra
 ```
 
-Además, asegúrate de que `nmap` y `hydra` estén correctamente instalados en tu sistema.
+## Requisitos
+- Python 3.8+
+- Paquetes Python:
+  - colorama
+  - pyfiglet
+  - readline (UNIX). En Windows usar pyreadline3
+- Herramientas del sistema instaladas y en PATH:
+  - nmap
+  - hydra
+
+Instalación rápida (Python):
+```bash
+pip install colorama pyfiglet
+# Windows (solución a readline)
+pip install pyreadline3
+```
+Instalación de herramientas del sistema:
+- Linux (Debian/Ubuntu):
+```bash
+sudo apt update && sudo apt install nmap hydra
+```
+- macOS (Homebrew):
+```bash
+brew install nmap hydra
+```
+- Windows: se recomienda usar WSL. Nmap tiene instalador nativo; Hydra suele requerir WSL/Cygwin.
 
 ## Uso
-
-Para ejecutar el script, simplemente corre el siguiente comando:
-
+Desde la carpeta EscaneoAutomatico:
 ```bash
-python3 fsociety.py
+python shell.py
+```
+El menú permite:
+1) Ejecutar Nmap (nmap/nmap2.py)
+2) Ejecutar Hydra (hydra/hydra.py)
+Escriba "exit" para salir y "main" para limpiar pantalla y volver al menú.
+
+También puede ejecutar directamente cada módulo:
+```bash
+python nmap/nmap2.py
+python hydra/hydra.py
 ```
 
-### Opciones disponibles:
+Nota sobre rutas/Windows: el menú interno usa comandos "python3 /EscaneoAutomatico/..." pensados para UNIX. Si en su entorno no se lanzan los subprogramas desde el menú, ejecute los módulos directamente como se muestra arriba o edite el diccionario programs en shell.py para que use:
+- "python nmap/nmap2.py"
+- "python hydra/hydra.py"
 
-1. **Ejecutar `nmap_fsociety`**
-2. **Ejecutar `hydra_fsociety`**
-3. **Escribir `exit` para salir**
-4. **Escribir `main` para limpiar la pantalla y volver al menú**
+## Ejemplos
+- Nmap: selección de escaneos como -A, -sS, --top-ports, --script=vuln, etc. Con posibilidad de editar el comando antes de ejecutarlo.
+- Hydra: ataques predefinidos para SSH, FTP, HTTP Basic, RDP, MySQL, VNC, SMB, Telnet o un comando personalizado.
 
-### Ejemplo de Uso
+## Solución de problemas
+- ModuleNotFoundError: readline (Windows)
+  - Instale pyreadline3: `pip install pyreadline3`
+- "nmap: command not found" / "hydra: command not found"
+  - Instale las herramientas del sistema y verifique que están en PATH.
+- Permisos requeridos
+  - Algunos escaneos pueden requerir privilegios elevados (sudo en Linux/macOS).
 
-```bash
-set> 1
-Ejecutando python3 /home/diego/Escritorio/Programas/EscaneoAutomatico/nmap/nmap2.py...
-```
-
-```bash
-set> 2
-Ejecutando python3 /home/diego/Escritorio/Programas/EscaneoAutomatico/hydra/hydra.py...
-```
-
-## Notas Adicionales
-
-- Si el usuario interrumpe el programa (`Ctrl + C`), el script manejará la interrupción y saldrá de manera controlada.
-- Si se introduce un comando inválido, se mostrará un mensaje de error en rojo.
-
-## Licencia
-
-Este proyecto está desarrollado con fines educativos y de práctica. Úsalo bajo tu propia responsabilidad.
+## Advertencia legal
+Este proyecto es únicamente para fines educativos y pruebas en entornos controlados. No ejecute estas herramientas sobre sistemas sin autorización expresa. El uso indebido puede ser ilegal.
